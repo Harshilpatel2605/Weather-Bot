@@ -23,16 +23,14 @@ def weather(message):
     url = f'http://api.openweathermap.org/data/2.5/weather?q={city}&appid={WEATHER_API_KEY}&units=metric'
     response = requests.get(url)
     if response.status_code == 200:
-        data = response.json()
-        city_name = data['name']
-        temp = data['main']['temp']
-        description = data['weather'][0]['description']
-        message_text = f'Weather in {city_name}:\nTemperature: {temp}°C\nDescription: {description.capitalize()}'
-        bot.reply_to(message, message_text)
+      data = response.json()
+      city_name = data['name']
+      temp = data['main']['temp']
+      description = data['weather'][0]['description']
+      message_text = f'Weather in {city_name}:\nTemperature: {temp}°C\nDescription: {description.capitalize()}'
+      bot.reply_to(message, message_text)
     else:
-        bot.reply_to(message, 'City not found. Please try again.')
-    
-    
+      bot.reply_to(message, 'City not found. Please try again.')
 
   else:
     bot.reply_to(message, "Please enter a valid city name.")
@@ -44,5 +42,6 @@ def exit(message):
                    "Hope it helped you. Thanks.\n---Exited---")
   bot.stop_polling()
 
+bot.remove_webhook()
 
 bot.polling()
